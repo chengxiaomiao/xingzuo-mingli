@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首页 - 星座命理</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <span class="title">星座命理</span>
+    <span class="user" id="userInfo"></span>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>欢迎回来</h2>
+      <p class="sub" id="roleDesc"></p>
+      <button onclick="goProfiles()">命理档案</button>
+      <button class="ghost" id="adminBtn" style="display:none" onclick="goAdmin()">账号管理（主账号）</button>
+      <button class="ghost" onclick="logout()">退出登录</button>
+    </div>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

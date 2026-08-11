@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>账号管理 - 星座命理</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <span class="title" onclick="location.href='home.html'" style="cursor:pointer">‹ 首页</span>
+    <span class="user">账号管理</span>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>添加子账号</h2>
+      <input id="newUser" placeholder="子账号（至少3位）">
+      <input id="newPass" type="password" placeholder="初始密码（至少6位）">
+      <button onclick="doAdd()">添加</button>
+      <p id="addMsg" class="msg"></p>
+    </div>
+    <div class="card">
+      <h2>子账号列表</h2>
+      <div id="list"></div>
+    </div>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Render 部署配置（免费版）
+# 在 Render 控制台「New → Web Service」选择本仓库后，Render 会自动读这个文件。
+# MONGODB_URI 需在 Render 控制台「Environment」里手动填入（见 README 上线步骤）。
+services:
+  - type: web
+    name: xingzuo-mingli-web
+    runtime: node
+    plan: free
+    region: oregon        # 就近选，新加坡可选 singapore
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false        # 部署时由你在控制台手动粘贴连接串

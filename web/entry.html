@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>录入出生信息 - 星座命理</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <span class="title" onclick="location.href='profiles.html'" style="cursor:pointer">‹ 返回</span>
+    <span class="user">出生信息</span>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>出生信息</h2>
+      <p class="sub">信息越准确，分析越贴合</p>
+
+      <input id="personName" placeholder="姓名 / 称呼（必填）">
+
+      <label class="sub">历法</label>
+      <select id="calendarType">
+        <option value="solar">公历</option>
+        <option value="lunar">农历</option>
+      </select>
+
+      <div style="display:flex; gap:8px">
+        <input id="year" type="number" placeholder="年" value="1990">
+        <input id="month" type="number" placeholder="月" value="6">
+        <input id="day" type="number" placeholder="日" value="15">
+      </div>
+
+      <label class="sub">出生时辰</label>
+      <select id="timeMode" onchange="toggleTime()">
+        <option value="precise">精确时间</option>
+        <option value="range">十二时辰范围</option>
+      </select>
+
+      <div id="preciseBox" style="display:flex; gap:8px">
+        <input id="hour" type="number" placeholder="时" value="12">
+        <input id="minute" type="number" placeholder="分" value="0">
+      </div>
+      <select id="shichen" style="display:none">
+        <option>子时</option><option>丑时</option><option>寅时</option><option>卯时</option>
+        <option>辰时</option><option>巳时</option><option>午时</option><option>未时</option>
+        <option>申时</option><option>酉时</option><option>戌时</option><option>亥时</option>
+      </select>
+
+      <label class="sub">性别</label>
+      <select id="gender">
+        <option value="男">男</option>
+        <option value="女">女</option>
+      </select>
+
+      <input id="city" placeholder="出生城市（如：北京）">
+      <button onclick="doSave()">保存并查看分析</button>
+      <p id="msg" class="msg"></p>
+    </div>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/entry.js"></script>
+</body>
+</html>

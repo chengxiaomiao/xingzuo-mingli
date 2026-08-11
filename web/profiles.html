@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>命理档案 - 星座命理</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="topbar">
+    <span class="title" onclick="location.href='home.html'" style="cursor:pointer">‹ 首页</span>
+    <span class="user">命理档案</span>
+  </div>
+  <div class="container">
+    <div id="tabs" class="tabs" style="display:none">
+      <button id="tabAll" class="active" onclick="switchTab('all')">全部（含子账号）</button>
+      <button id="tabMine" onclick="switchTab('mine')">仅我的</button>
+    </div>
+    <div id="list"></div>
+    <button onclick="location.href='entry.html'">+ 新增档案</button>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/profiles.js"></script>
+</body>
+</html>

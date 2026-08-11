@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册主账号 - 星座命理</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h1>注册主账号</h1>
+      <p class="sub">第一个注册的账号将作为主账号</p>
+      <input id="username" placeholder="设置账号（至少3位）" autocomplete="username">
+      <input id="password" type="password" placeholder="设置密码（至少6位）" autocomplete="new-password">
+      <button onclick="doRegister()">注册</button>
+      <p class="tip">已有账号？<a href="login.html">去登录</a></p>
+      <p id="msg" class="msg"></p>
+    </div>
+  </div>
+  <script src="js/common.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
