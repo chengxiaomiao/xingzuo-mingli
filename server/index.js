@@ -25,6 +25,9 @@ async function start() {
   // 静态前端
   app.use(express.static(path.join(__dirname, '..', 'web')));
 
+  // 根路径重定向到登录页
+  app.get('/', (req, res) => res.redirect('/login.html'));
+
   const port = process.env.PORT || 3000;
   app.listen(port, () => {
     console.log(`\n  星座命理网页版已启动：`);
