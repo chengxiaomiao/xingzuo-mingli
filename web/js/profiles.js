@@ -23,20 +23,16 @@ async function loadList() {
     return;
   }
   box.innerHTML = list.map((p) => {
-    const tag = p.isMine
-      ? '<span class="tag mine">本人档案</span>'
-      : '<span class="tag">录入者：' + escapeHtml(p.ownerName) + '</span>';
-    return '<div class="card">' +
-      '<div class="row">' +
-        '<div><div class="name">' + escapeHtml(p.personName) + tag + '</div>' +
+    const tag = p.isMine ? '本人档案' : ('录入者：' + p.ownerName);
+    return '<div class="profile-item">' +
+      '<div><div class="name">' + escapeHtml(p.personName) +
+        '<span class="meta" style="margin-left:8px">' + escapeHtml(tag) + '</span></div>' +
         '<div class="meta">' + cityOf(p) + '</div></div>' +
-        '<div>' +
-          '<button class="small" onclick="analyze(\'' + p._id + '\')">查看分析</button>' +
-          '<button class="small ghost" onclick="edit(\'' + p._id + '\')">编辑</button>' +
-          '<button class="small danger" onclick="remove(\'' + p._id + '\')">删除</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
+      '<div class="actions">' +
+        '<button class="mini" onclick="analyze(\'' + p._id + '\')">分析</button>' +
+        '<button class="mini" onclick="edit(\'' + p._id + '\')">编辑</button>' +
+        '<button class="mini danger" onclick="remove(\'' + p._id + '\')">删除</button>' +
+      '</div></div>';
   }).join('');
 }
 

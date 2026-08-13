@@ -16,44 +16,63 @@
       <h2>出生信息</h2>
       <p class="sub">信息越准确，分析越贴合</p>
 
-      <input id="personName" placeholder="姓名 / 称呼（必填）">
-
-      <label class="sub">历法</label>
-      <select id="calendarType">
-        <option value="solar">公历</option>
-        <option value="lunar">农历</option>
-      </select>
-
-      <div style="display:flex; gap:8px">
-        <input id="year" type="number" placeholder="年" value="1990">
-        <input id="month" type="number" placeholder="月" value="6">
-        <input id="day" type="number" placeholder="日" value="15">
+      <div class="field">
+        <label>姓名 / 称呼</label>
+        <input id="personName" placeholder="必填">
       </div>
 
-      <label class="sub">出生时辰</label>
-      <select id="timeMode" onchange="toggleTime()">
-        <option value="precise">精确时间</option>
-        <option value="range">十二时辰范围</option>
-      </select>
-
-      <div id="preciseBox" style="display:flex; gap:8px">
-        <input id="hour" type="number" placeholder="时" value="12">
-        <input id="minute" type="number" placeholder="分" value="0">
+      <div class="field">
+        <label>历法</label>
+        <select id="calendarType">
+          <option value="solar">公历</option>
+          <option value="lunar">农历</option>
+        </select>
       </div>
-      <select id="shichen" style="display:none">
+
+      <div class="field">
+        <label>出生年 / 月 / 日</label>
+        <div style="display:flex; gap:8px">
+          <input id="year" type="number" placeholder="年" value="1990">
+          <input id="month" type="number" placeholder="月" value="6">
+          <input id="day" type="number" placeholder="日" value="15">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>出生时辰</label>
+        <select id="timeMode" onchange="toggleTime()">
+          <option value="precise">精确时间</option>
+          <option value="range">十二时辰范围</option>
+        </select>
+      </div>
+
+      <div id="preciseBox" class="field">
+        <label>精确时间</label>
+        <div style="display:flex; gap:8px">
+          <input id="hour" type="number" placeholder="时" value="12">
+          <input id="minute" type="number" placeholder="分" value="0">
+        </div>
+      </div>
+      <select id="shichen" style="display:none;width:100%;padding:12px 14px;font-size:15px;border:1rpx solid var(--line);border-radius:9px;background:rgba(255,255,255,0.6);color:var(--ink);font-family:var(--sans)">
         <option>子时</option><option>丑时</option><option>寅时</option><option>卯时</option>
         <option>辰时</option><option>巳时</option><option>午时</option><option>未时</option>
         <option>申时</option><option>酉时</option><option>戌时</option><option>亥时</option>
       </select>
 
-      <label class="sub">性别</label>
-      <select id="gender">
-        <option value="男">男</option>
-        <option value="女">女</option>
-      </select>
+      <div class="field">
+        <label>性别</label>
+        <select id="gender">
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select>
+      </div>
 
-      <input id="city" placeholder="出生城市（如：北京）">
-      <button onclick="doSave()">保存并查看分析</button>
+      <div class="field">
+        <label>出生城市</label>
+        <input id="city" placeholder="如：北京">
+      </div>
+
+      <button class="btn btn-primary" onclick="doSave()">保存并查看分析</button>
       <p id="msg" class="msg"></p>
     </div>
   </div>

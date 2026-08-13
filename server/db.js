@@ -1,35 +1,52 @@
 // server/db.js
-// MongoDB 连接层：优先读 MONGODB_URI（生产/线上），否则用内存库（本地零配置开发）
-const { MongoClient } = require('mongodb');
+// SQLite 连接层（文件数据库，免外部服务，部署零配置）
+// 用 better-sqlite3（同步 API），数据库文件随应用部署，无需注册任何云数据库账号。
+const path = require('path');
+const fs = require('fs');
+const Database = require('better-sqlite3');
 
-let client = null;
+const DB_PATH = process.env.SQLITE_PATH || path.join(__dirname, '..', 'data', 'mingli.db');
+fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+
 let db = null;
 
-async function connect() {
-  const uri = process.env.MONGODB_URI;
-  if (uri) {
-    client = new MongoClient(uri);
-    await client.connect();
-    db = client.db(process.env.MONGODB_DB || 'mingli');
-    console.log('[db] 已连接 MongoDB');
-    return db;
-  }
-
-  // 本地开发：自动拉起内存版 MongoDB，无需安装任何数据库
-  console.log('[db] 未检测到 MONGODB_URI，启动本地内存数据库（仅开发用）...');
-  try {
-    const { MongoMemoryServer } = require('mongodb-memory-server');
-    const mem = await MongoMemoryServer.create();
-    client = new MongoClient(mem.getUri());
-    await client.connect();
-    db = client.db('mingli');
-    console.log('[db] 内存数据库已就绪');
-    return db;
-  } catch (e) {
-    console.error('[db] 内存数据库启动失败：', e.message);
-    console.error('[db] 请在环境变量中设置 MONGODB_URI 指向你的 MongoDB 连接串');
-    throw e;
-  }
+function connect() {
+  db = new Database(DB_PATH);
+  db.pragma('journal_mode = WAL');
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT UNIQUE NOT NULL,
+      passwordHash TEXT NOT NULL,
+      salt TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'member',
+      owner TEXT NOT NULL DEFAULT '',
+      status TEXT NOT NULL DEFAULT 'active',
+      token TEXT NOT NULL DEFAULT '',
+      tokenExpire TEXT,
+      createdAt TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS profiles (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      owner TEXT NOT NULL,
+      personName TEXT NOT NULL,
+      birthInfo TEXT NOT NULL,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS results (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      owner TEXT NOT NULL,
+      recordId INTEGER NOT NULL,
+      personName TEXT NOT NULL,
+      result TEXT NOT NULL,
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL,
+      UNIQUE(owner, recordId)
+    );
+  `);
+  console.log('[db] SQLite 已连接：' + DB_PATH);
+  return db;
 }
 
 function getDb() {
@@ -40,15 +57,15 @@ function getDb() {
 // 返回操作者「有权访问的账号集合」
 // - 子账号：仅自己
 // - 主账号：自己 + 名下所有子账号
-async function getAllowedOwners(username) {
-  const me = await getDb().collection('users').findOne({ username });
+function getAllowedOwners(username) {
+  const me = getDb().prepare('SELECT role FROM users WHERE username = ?').get(username);
   const role = me ? me.role : '';
   if (role !== 'owner') {
     return { role: role || 'member', owners: [username] };
   }
-  const members = await getDb().collection('users')
-    .find({ owner: username, role: 'member' })
-    .toArray();
+  const members = getDb()
+    .prepare("SELECT username FROM users WHERE owner = ? AND role = 'member'")
+    .all(username);
   return { role: 'owner', owners: [username, ...members.map((m) => m.username)] };
 }
 

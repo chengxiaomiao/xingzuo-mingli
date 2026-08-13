@@ -25,14 +25,15 @@ async function loadList() {
     return;
   }
   box.innerHTML = data.list.map((u) => {
-    const statusText = u.status === 'disabled' ? '已停用' : '正常';
-    const actionBtn = u.status === 'disabled'
-      ? '<button class="small ghost" onclick="toggle(\'' + u.username + '\',\'enable\')">启用</button>'
-      : '<button class="small" onclick="toggle(\'' + u.username + '\',\'disable\')">停用</button>';
-    return '<div class="row"><div><div class="name">' + escapeHtml(u.username) +
-      '</div><div class="meta">状态：' + statusText + '</div></div>' +
-      '<div>' + actionBtn +
-      '<button class="small danger" onclick="remove(\'' + u.username + '\')">删除</button></div></div>';
+    const disabled = u.status === 'disabled';
+    const statusText = disabled ? '已停用' : '正常';
+    const actionBtn = disabled
+      ? '<button class="mini" onclick="toggle(\'' + u.username + '\',\'enable\')">启用</button>'
+      : '<button class="mini" onclick="toggle(\'' + u.username + '\',\'disable\')">停用</button>';
+    return '<div class="member-item' + (disabled ? ' disabled' : '') + '">' +
+      '<div><div class="mname">' + escapeHtml(u.username) + '</div><div class="mstatus">状态：' + statusText + '</div></div>' +
+      '<div class="actions">' + actionBtn +
+      '<button class="mini danger" onclick="remove(\'' + u.username + '\')">删除</button></div></div>';
   }).join('');
 }
 
