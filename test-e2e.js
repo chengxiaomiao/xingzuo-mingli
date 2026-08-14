@@ -1,5 +1,5 @@
-// test-e2e.js —— 端到端验证（自动启动服务 + 内存库，跑完整流程）
-require('./server/index.js'); // 启动 Express + 内存 MongoDB
+// test-e2e.js —— 端到端验证（自动启动服务 + 本地 LibSQL 库，跑完整流程）
+require('./server/index.js'); // 启动 Express + LibSQL（未配 LIBSQL_URL 时回退本地 data/mingli.db）
 
 const BASE = 'http://localhost:3000/api';
 
@@ -12,7 +12,7 @@ async function waitReady() {
       await new Promise((r) => setTimeout(r, 1000));
     }
   }
-  throw new Error('服务未就绪（内存库可能下载较慢或失败）');
+  throw new Error('服务未就绪（请确认 3000 端口空闲且依赖已安装）');
 }
 
 async function call(path, token, body) {

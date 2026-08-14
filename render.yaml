@@ -1,6 +1,10 @@
 # Render 部署配置（免费版）
 # 在 Render 控制台「New → Web Service」选择本仓库后，Render 会自动读这个文件。
-# SQLite 文件数据库随应用部署，无需任何外部数据库配置。
+#
+# 数据库：使用 LibSQL（@libsql/client）。
+#   - 若配置了 LIBSQL_URL + LIBSQL_AUTH_TOKEN → 连接 Turso 等托管库（数据持久、重部署不丢）。
+#   - 若未配置 → 自动回退到本地文件 data/mingli.db（Render 免费层为临时盘，重部署会清空）。
+# 想让数据持久保存，请在 Render 控制台「Environment」里添加下面两个变量（sync:false 表示由你手动填写）：
 services:
   - type: web
     name: xingzuo-mingli-web
@@ -13,3 +17,7 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: LIBSQL_URL
+        sync: false
+      - key: LIBSQL_AUTH_TOKEN
+        sync: false

@@ -11,7 +11,7 @@
     "node": "22.x"
   },
   "dependencies": {
-    "better-sqlite3": "^11.3.0",
+    "@libsql/client": "^0.17.4",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "lunar-javascript": "^1.6.18"
